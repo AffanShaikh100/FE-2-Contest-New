@@ -1,5 +1,5 @@
 // addded student details array
-const student =  [{"id":1,"first_name":"Chadwick","last_name":"Ayre","email":"cayre0@cam.ac.uk","gender":"Male","img_src":"https://robohash.org/corporisquiaperiam.png?size=50x50&set=set1","class":11,"marks":18,"passing":false,"city":"Moorreesburg"},
+let student =  [{"id":1,"first_name":"Chadwick","last_name":"Ayre","email":"cayre0@cam.ac.uk","gender":"Male","img_src":"https://robohash.org/corporisquiaperiam.png?size=50x50&set=set1","class":11,"marks":18,"passing":false,"city":"Moorreesburg"},
 {"id":2,"first_name":"Abrahan","last_name":"Seabrocke","email":"aseabrocke1@ocn.ne.jp","gender":"Male","img_src":"https://robohash.org/autiuredistinctio.png?size=50x50&set=set1","class":3,"marks":27,"passing":true,"city":"Kampong Thom"},
 {"id":3,"first_name":"Nathanael","last_name":"Laye","email":"nlaye2@typepad.com","gender":"Male","img_src":"https://robohash.org/dolorumsedut.png?size=50x50&set=set1","class":10,"marks":89,"passing":false,"city":"Niquinohomo"},
 {"id":4,"first_name":"Luigi","last_name":"Balcers","email":"lbalcers3@reverbnation.com","gender":"Agender","img_src":"https://robohash.org/eumaliquamest.png?size=50x50&set=set1","class":8,"marks":30,"passing":false,"city":"Nashtā Rūd"},
@@ -104,13 +104,17 @@ const tbody = document.getElementById("tbody");
 const search = document.getElementById("search");
 
 
-function addstudentsdetails(){
 
-    
-    for(let i=0; i<student.length; i++){
+function addstudentsdetails(datalist){
+
+    tbody.innerHTML ="";
+
+
+    for(let i=0; i<datalist.length; i++){
 
         let result;
-        if(student[i].passing==true)
+        let srno = i+1;
+        if(datalist[i].passing===true)
         {
             result = "passing";
         }
@@ -119,7 +123,7 @@ function addstudentsdetails(){
         }
 
         const iconpic = document.createElement("IMG");
-        iconpic.setAttribute("src",student[i].img_src)
+        iconpic.setAttribute("src",datalist[i].img_src)
         iconpic.alt ="Please Wait";
 
 
@@ -132,12 +136,12 @@ function addstudentsdetails(){
         const td5 = document.createElement("td");
         const td6 = document.createElement("td");
 
-        let unique = student[i].id;
-        let nameinfo = " " + student[i].first_name + "  " + student[i].last_name;
-        let gend = student[i].gender;
-        let cls  = student[i].class;
-        let mrk  = student[i].marks;
-        let eml = student[i].email;
+        let unique = srno;
+        let nameinfo = " " + datalist[i].first_name + "  " + datalist[i].last_name;
+        let gend = datalist[i].gender;
+        let cls  = datalist[i].class;
+        let mrk  = datalist[i].marks;
+        let eml = datalist[i].email;
  
         td.append(unique);
         tr.appendChild(td);
@@ -167,26 +171,59 @@ function addstudentsdetails(){
 
 
 // CREATINMG SEARCH FUNCTIONALITY
-// const termv = document.getElementById("nameval").value;
- const termv = document.getElementById("nameval");
+
  function searching(){
     
-    let terms = termv.value.toUpperCase();
-    let tr = tbody.getElementsByTagName("tr");
+    let termv = document.getElementById("nameval").value
+    termv = termv.toLowerCase();
+    console.log(termv);
+    let searchedname= student.filter((s)=>{
+      return(s.first_name.toLowerCase().includes(termv)||
+              s.last_name.toLowerCase().includes(termv)||
+              s.email.toLowerCase().includes(termv)
+      )
+        
+    })
+    console.log(searchedname);
+    addstudentsdetails(searchedname);
     
-    for(let i=0; i<tr.length; i++)
-    {
-        let tdn = tr[i].getElementsByTagName("td")[1];
-        let tde = tr[i].getElementsByTagName("td")[6];
-
-        if(tdn.innerText.toUpperCase().indexOf(terms) > -1
-        || tde.innerText.toLocaleUpperCase().indexOf(terms) > -1){
-            tr[i].style.display="";
-        }
-        else{
-            tr[i].style.display="none";
-        }
-    }
  }
 
 
+
+// CREATING FUNCTIONALITY TO SORT THE LIST BY GREATER MARKS
+
+function sortmarrks(){
+
+    let ascmarks = student.sort((a,b)=>{
+        return a.marks-b.marks;
+    });
+    addstudentsdetails(ascmarks);
+}
+
+// CREATING FUNCTIONALITY OF ASC SORTING OF NAMES
+
+function ascname(){
+
+    let ascnamesrt = student.sort((a,b)=> a.first_name.localeCompare(b.first_name));
+    addstudentsdetails(ascnamesrt);
+}
+
+function dscname(){
+    let dscnamesrt = student.sort((a,b)=> b.first_name.localeCompare(a.first_name));
+    addstudentsdetails(dscnamesrt);
+}
+
+function passingstd(){
+
+    let passingstudent = student.filter((s)=>{
+        return s.passing==true;
+    }
+    )
+    addstudentsdetails(passingstudent);
+}
+
+function ascclass(){
+    let lowerclas = student.sort((a,b)=>a.class-b.class);
+    addstudentsdetails(lowerclas);
+}

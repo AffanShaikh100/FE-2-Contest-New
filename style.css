@@ -45,6 +45,7 @@ input::placeholder{
 }
 .controls-btn>button{
     margin-right: 14px;
+    margin-bottom: 10px;
 }
 table{
     width: 92vw;
@@ -64,4 +65,5 @@ td{
 table, th, tr, td{
     border: 1px solid black;
     border-collapse: collapse;
+    
 }

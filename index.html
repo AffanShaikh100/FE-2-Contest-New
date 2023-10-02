@@ -12,7 +12,7 @@
      <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
 
 </head>
-<body onload="addstudentsdetails()">
+<body onload="addstudentsdetails(student)">
     <h2>Student Portal</h2>
     <div  id="form">
         <div class="input-search">
@@ -20,11 +20,11 @@
             <button id="search" onclick="searching()">Search</button>
         </div>
         <div class="controls-btn">
-            <button>Sort A->Z </button>
-            <button>Sort Z->A </button>
+            <button onclick="ascname()">Sort A->Z </button>
+            <button onclick="dscname()">Sort Z->A </button>
             <button onclick="sortmarrks()">Sort by Marks</button>
-            <button>Sort by Passing</button>
-            <button>Sort by Class</button>
+            <button onclick="passingstd()">Sort by Passing</button>
+            <button onclick="ascclass()">Sort by Class</button>
             <button>Sort by Gender</button>
         </div>
     </div>
